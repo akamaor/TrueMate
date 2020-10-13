@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "475590486252",
+    "firebase_url": "https://truemate-aw.firebaseio.com",
+    "project_id": "truemate-aw",
+    "storage_bucket": "truemate-aw.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475590486252:android:de227619a8b866e43fddc9",
+        "android_client_info": {
+          "package_name": "com.aw.truemate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475590486252-em2io0234a4bkq2ma9pulppe55h8hp0l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aw.truemate",
+            "certificate_hash": "3a8809d1dfe3d44bcddb2462b1382d00c7310dfe"
+          }
+        },
+        {
+          "client_id": "475590486252-ncuhv3nbijm8552j21jsv65qdg70vtub.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADOBMNkFiISExaFchBpPFzf2NoD9xL2d4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475590486252-ncuhv3nbijm8552j21jsv65qdg70vtub.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
