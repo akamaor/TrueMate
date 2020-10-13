@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "475590486252-srfitd65n5r84e9ta6c5mbos05vltfh9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aw.truemate",
+            "certificate_hash": "91d7fb6d721bf602c5e9b78473b12fc771f40035"
+          }
+        },
+        {
           "client_id": "475590486252-em2io0234a4bkq2ma9pulppe55h8hp0l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
