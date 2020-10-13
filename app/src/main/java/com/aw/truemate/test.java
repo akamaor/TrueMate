@@ -35,6 +35,16 @@ public class test {
 
     }
 
+    public void run1(){
+        DatabaseReference DB = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference  usr = DB.child("users/888u4ExM9w2jiWdCGNtE");
+        Map<String,Object> datatosave = new HashMap<String,Object>();
+        datatosave.put("username","x");
+        datatosave.put("phone","y");
+        datatosave.put("mass",null);
+        usr.setValue(datatosave);
+
+    }
 
     protected void update(String user_id, String filed_name, String value) {
 
