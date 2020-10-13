@@ -11,6 +11,7 @@ public class userDetails {
     public String user_id;
     public String name;
     public String gender;
+    public String age;
     public String city;
     public String neighborhood;
     public String roommate_number;
@@ -30,6 +31,10 @@ public class userDetails {
 
     public String getGender() {
         return gender;
+    }
+
+    public String getAge() {
+        return age;
     }
 
     public String getCity() {
@@ -69,10 +74,11 @@ public class userDetails {
     }
 
 
-    public userDetails(String user_id, String name, String gender, String city, String neighborhood, String roommate_number){
+    public userDetails(String user_id, String name, String gender, String age, String city, String neighborhood, String roommate_number){
         this.user_id = user_id;
         this.name = name;
         this.gender = gender;
+        this.age = age;
         this.city = city;
         this.neighborhood = neighborhood;
         this.roommate_number = roommate_number;
@@ -84,6 +90,7 @@ public class userDetails {
         userDetails.put("user_id", user_id); // user_id is an email
         userDetails.put("name", name);
         userDetails.put("gender", gender);
+        userDetails.put("age", age);
         userDetails.put("city", city);
         userDetails.put("neighborhood", neighborhood);
         userDetails.put("roommate_number", roommate_number);
