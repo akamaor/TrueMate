@@ -14,6 +14,9 @@
             android:label="@string/title_activity_questions"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".QuestionsActivity1" />
+
+        <activity android:name=".SwipeActivity"></activity>
+
         <activity android:name=".LoginActivity" />
         <activity android:name=".HomeActivity" />
         <activity

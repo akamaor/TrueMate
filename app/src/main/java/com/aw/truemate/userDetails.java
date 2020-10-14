@@ -4,18 +4,20 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
 public class userDetails {
-    public String user_id;
-    public String name;
-    public String gender;
-    public String age;
-    public String city;
-    public String neighborhood;
-    public String roommate_number;
-    public Map<String, Boolean> stars = new HashMap<>();
+    private String user_id;
+    private String name;
+    private String gender;
+    private String age;
+    private String city;
+    private String neighborhood;
+    private String roommate_number;
+    private Map<String, Boolean> stars = new HashMap<>();
+    private LinkedHashMap<String, userDetails> likedList = new LinkedHashMap<>();
 
     public userDetails(){
         //default constructor
@@ -49,6 +51,10 @@ public class userDetails {
         return roommate_number;
     }
 
+    public LinkedHashMap<String, userDetails> getLikedList() {
+        return likedList;
+    }
+
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
@@ -71,6 +77,10 @@ public class userDetails {
 
     public void setRoommate_number(String roommate_number) {
         this.roommate_number = roommate_number;
+    }
+
+    public void setLikedList(LinkedHashMap<String, userDetails> likedList) {
+        this.likedList = likedList;
     }
 
     public userDetails(String user_id){
@@ -97,6 +107,7 @@ public class userDetails {
         userDetails.put("city", city);
         userDetails.put("neighborhood", neighborhood);
         userDetails.put("roommate_number", roommate_number);
+        userDetails.put("liked_list", likedList);
 
         return userDetails;
     }
