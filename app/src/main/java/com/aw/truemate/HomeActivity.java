@@ -13,6 +13,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class HomeActivity extends AppCompatActivity {
 
     Button btnLogout;
+    Button btnSwipe;
+    Button btnUpdate;
+    Button btnMylist;
+
     FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
@@ -20,14 +24,45 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        btnLogout = findViewById(R.id.logout);
+        btnSwipe=findViewById(R.id.swipeButton);
+        btnLogout = findViewById(R.id.logoutButton);
+        btnUpdate = findViewById(R.id.updateButton);
+        btnMylist=findViewById(R.id.mylistButton);
+
+ //swiping
+        btnSwipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent i = new Intent(HomeActivity.this, MainActivity.class);
+//                startActivity(i);
+            }
+        });
+
 //loging out and returning to main activity.
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intToMain = new Intent(HomeActivity.this, MainActivity.class);
-                startActivity(intToMain);
+                Intent i = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        //update details button pressed
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        //My list button pressed
+        btnMylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, MainActivity.class);
+                startActivity(i);
             }
         });
     }
