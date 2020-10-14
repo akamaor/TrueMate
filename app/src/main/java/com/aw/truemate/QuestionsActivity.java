@@ -47,10 +47,10 @@ public class QuestionsActivity extends AppCompatActivity {
         editRoommate = (EditText) findViewById(R.id.editRoommate);
         editNeighborhood = (EditText) findViewById(R.id.editNeighborhood);
         editCity = (EditText) findViewById(R.id.editCity);
-        String DBName = DB.readCollection("users","name",DB.getUid());
-
-        editName.setText(DBName);
-
+        Object DBName = DB.readCollection("users","name",DB.getUid());
+        if(DBName != null) {
+            editName.setText(DBName.toString());
+        }
 
         buttonUpdate = (Button)findViewById(R.id.buttonUpdate);
 

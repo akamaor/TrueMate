@@ -19,15 +19,13 @@ public class Firebase {
     }
 
     public String getUid(){
-        return mAuth.getUid();
+        return mAuth.getCurrentUser().getUid();
     }
 
-    public String readCollection(String collectionName,String detail, String userid){
-        Source source = Source.CACHE;
-        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +userid);
-        Task<DocumentSnapshot> s = document.get();
-        return s.getResult().get(detail).toString();
-
+    public Object readCollection(String collectionName,String detail, String userId){
+        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +userId);
+        Task<DocumentSnapshot> source = document.get();
+        return source.getResult().get(detail);
     }
 
 }

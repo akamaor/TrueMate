@@ -30,10 +30,10 @@ public class QuestionsActivity1<DB> extends AppCompatActivity {
         editRoommate = (EditText) findViewById(R.id.editRoommate);
         editNeighborhood = (EditText) findViewById(R.id.editNeighborhood);
         editCity = (EditText) findViewById(R.id.editCity);
-        String DBName = DB.readCollection("users","name",DB.getUid());
-
-        editName.setText(DBName);
-
+        Object userName = DB.readCollection("users","name",DB.getUid());
+        if(userName != null) {
+            editName.setText(userName.toString());
+        }
 
         buttonUpdate = (Button)findViewById(R.id.buttonUpdate);
 
@@ -42,7 +42,7 @@ public class QuestionsActivity1<DB> extends AppCompatActivity {
                                             @Override
                                             public void onClick(View v) {
                                                 //
-                                                final userDetails uDetails = new userDetails(DB.getUid(),editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
+                                                final userDetails uDetails = new userDetails("akamaor@gmail.com",editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
                                                 DB.updateCollection(DB.getUid(),"anydocumentKey",uDetails.toMap());
 
                                                 Toast.makeText(QuestionsActivity1.this,"Update complete!",Toast.LENGTH_SHORT).show();
