@@ -62,8 +62,9 @@ public class MainActivity extends AppCompatActivity {
                             else {
                                 Firebase fb = new Firebase();
                                 userDetails user = new userDetails(email);
-                                fb.updateCollection("users", email, user.toMap());
-                                startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                                fb.updateCollection("users", fb.getUid(), user.toMap());
+//                                fb.readCollection("users", "name", fb.getUid());
+                                startActivity(new Intent(MainActivity.this, QuestionsActivity.class));
                             }
                         }
                     });
