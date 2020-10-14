@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         btnLogout = findViewById(R.id.logout);
-
+        //SignOut Button
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,5 +30,12 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intToMain);
             }
         });
+
+    }
+
+    //Edit info button direct to questions activity
+    public void moveToQuestionActivity(View view) {
+        Intent intent = new Intent(this, QuestionsActivity1.class);
+        startActivity(intent);
     }
 }
