@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
-
+//this activity folliw the case of successful registraion.
 public class HomeActivity extends AppCompatActivity {
 
     Button btnLogout;
@@ -21,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         btnLogout = findViewById(R.id.logout);
-
+//loging out and returning to main activity.
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

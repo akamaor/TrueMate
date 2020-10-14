@@ -2,7 +2,6 @@ package com.aw.truemate;
 
 import android.content.Intent;
 import androidx.annotation.NonNull;
-//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,10 +28,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        // conecting to the xml elements of the activity
         emailId = findViewById(R.id.editText);
         password = findViewById(R.id.editText2);
         btnSignUp = findViewById(R.id.button2);
         tvSignIn = findViewById(R.id.textView);
+        //sign up button pressed. takes the email and password fields, check for filling errors.
+        //then it passes it to mFirebaseAuth and listen to end of process.
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"Fields Are Empty!",Toast.LENGTH_SHORT).show();
                 }
                 else  if(!(email.isEmpty() && pwd.isEmpty())){
+                    //listening.
                     mFirebaseAuth.createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
