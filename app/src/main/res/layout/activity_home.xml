@@ -11,8 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="269dp"
-        android:layout_marginEnd="163dp"
-        android:layout_marginStart="163dp"
         android:layout_marginTop="223dp"
         android:text="Welcome! You are logged in"
         app:layout_constraintBottom_toBottomOf="parent"
