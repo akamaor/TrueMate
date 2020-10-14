@@ -73,6 +73,9 @@ public class userDetails {
         this.roommate_number = roommate_number;
     }
 
+    public userDetails(String user_id){
+        this.user_id = user_id;
+    }
 
     public userDetails(String user_id, String name, String gender, String age, String city, String neighborhood, String roommate_number){
         this.user_id = user_id;

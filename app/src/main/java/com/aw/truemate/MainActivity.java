@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        // conecting to the xml elements of the activity
+        // connecting to the xml elements of the activity
         emailId = findViewById(R.id.editText);
         password = findViewById(R.id.editText2);
         btnSignUp = findViewById(R.id.button2);
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailId.getText().toString();
+                final String email = emailId.getText().toString();
                 String pwd = password.getText().toString();
                 if(email.isEmpty()){
                     emailId.setError("Please enter email id");
@@ -60,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this,"SignUp Unsuccessful, Please Try Again",Toast.LENGTH_SHORT).show();
                             }
                             else {
+                                Firebase fb = new Firebase();
+                                userDetails user = new userDetails(email);
+                                fb.updateCollection("users", email, user.toMap());
                                 startActivity(new Intent(MainActivity.this,HomeActivity.class));
                             }
                         }
