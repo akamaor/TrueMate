@@ -6,28 +6,36 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editCity"
+        android:id="@+id/editAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="17dp"
         android:ems="10"
+        android:hint="Age"
         android:inputType="textPersonName"
-        android:text="City"
-        app:layout_constraintBottom_toTopOf="@+id/editNeighborhood"
-        app:layout_constraintStart_toStartOf="@+id/editGender"
-        app:layout_constraintTop_toBottomOf="@+id/editGender" />
+        app:layout_constraintStart_toStartOf="@+id/editName"
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
+
+    <Button
+        android:id="@+id/buttonUpdate"
+        android:layout_width="76dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRoommate" />
 
     <EditText
-        android:id="@+id/editNeighborhood"
+        android:id="@+id/editGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="21dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="Gender"
         android:inputType="textPersonName"
-        android:text="Neighborhood"
-        app:layout_constraintBottom_toTopOf="@+id/editRoommate"
-        app:layout_constraintStart_toStartOf="@+id/editCity"
-        app:layout_constraintTop_toBottomOf="@+id/editCity" />
+        app:layout_constraintStart_toStartOf="@+id/editAge"
+        app:layout_constraintTop_toBottomOf="@+id/editAge" />
 
     <EditText
         android:id="@+id/editRoommate"
@@ -35,58 +43,43 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
-        android:layout_marginBottom="286dp"
+        android:layout_marginTop="21dp"
         android:ems="10"
+        android:hint="Roommate Number"
         android:inputType="textPersonName"
-        android:text="Roommate Number"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/editNeighborhood"
         app:layout_constraintTop_toBottomOf="@+id/editNeighborhood" />
 
     <EditText
-        android:id="@+id/editGender"
+        android:id="@+id/editNeighborhood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="Neighborhood"
         android:inputType="textPersonName"
-        android:text="Gender"
-        app:layout_constraintBottom_toTopOf="@+id/editCity"
-        app:layout_constraintStart_toStartOf="@+id/editAge"
-        app:layout_constraintTop_toBottomOf="@+id/editAge" />
+        app:layout_constraintStart_toStartOf="@+id/editCity"
+        app:layout_constraintTop_toBottomOf="@+id/editCity" />
 
     <EditText
-        android:id="@+id/editAge"
+        android:id="@+id/editCity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="City"
         android:inputType="textPersonName"
-        android:text="Age"
-        app:layout_constraintBottom_toTopOf="@+id/editGender"
-        app:layout_constraintStart_toStartOf="@+id/editName"
-        app:layout_constraintTop_toBottomOf="@+id/editName" />
+        app:layout_constraintStart_toStartOf="@+id/editGender"
+        app:layout_constraintTop_toBottomOf="@+id/editGender" />
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="45dp"
         android:ems="10"
+        android:hint="Name"
         android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/editAge"
-        app:layout_constraintStart_toStartOf="@+id/buttonUpdate"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUpdate" />
-
-    <Button
-        android:id="@+id/buttonUpdate"
-        android:layout_width="213dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="9dp"
-        android:text="Update"
-        app:layout_constraintBottom_toTopOf="@+id/editName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

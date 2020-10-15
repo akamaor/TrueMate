@@ -1,44 +1,41 @@
 package com.aw.truemate;
 
-import android.os.Bundle;
-
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class QuestionsActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
+
+public class QuestionsActivity<DB> extends AppCompatActivity {
     //layout
     EditText editName,editAge,editGender,editRoommate,editNeighborhood,editCity;
     Button buttonUpdate;
+
     //Firebase database
+    /*public DatabaseReference DB = FirebaseDatabase.getInstance().getReference();
+    public DatabaseReference  userdb = DB.child("users");*/
     Firebase DB = new Firebase();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questions);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolBarLayout.setTitle(getTitle());
+        setContentView(R.layout.questions_activity);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+        //create userID
+        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+        final String userID = mAuth.getCurrentUser().getUid();
 
         //create variable for the layout
         editName = (EditText) findViewById(R.id.editName);
@@ -47,10 +44,31 @@ public class QuestionsActivity extends AppCompatActivity {
         editRoommate = (EditText) findViewById(R.id.editRoommate);
         editNeighborhood = (EditText) findViewById(R.id.editNeighborhood);
         editCity = (EditText) findViewById(R.id.editCity);
-        Object DBName = DB.readCollection("users","name",DB.getUid());
-        if(DBName != null) {
-            editName.setText(DBName.toString());
-        }
+
+        FirebaseFirestore FB=FirebaseFirestore.getInstance();
+        DocumentReference docRef = FB.collection("users").document(userID);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+
+                        editName.setText(document.getString("name"));
+                        editAge.setText(document.getString("age"));
+                        editGender.setText(document.getString("gender"));
+                        editCity.setText(document.getString("city"));
+                        editNeighborhood.setText(document.getString("neighborhood"));
+                        editRoommate.setText(document.getString("roommate_number"));
+                    } else {//no doc
+                    }
+                } else {//fail somehow
+                }
+            }
+        });
+        //editName.setText("234");
+
+
 
         buttonUpdate = (Button)findViewById(R.id.buttonUpdate);
 
@@ -58,16 +76,18 @@ public class QuestionsActivity extends AppCompatActivity {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                //
-                final userDetails uDetails = new userDetails(DB.getUid(),editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
-                DB.updateCollection(DB.getUid(),"anydocumentKey",uDetails.toMap());
-
-                Toast.makeText(QuestionsActivity.this,"Update complete!",Toast.LENGTH_SHORT).show();
-            }
-        }
+                                                //the Firebase doesent work well
+                                                final userDetails uDetails = new userDetails(userID,editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
+                                                DB.updateCollection("users",userID,uDetails.toMap());
+                                                Toast.makeText(QuestionsActivity.this,"Update complete!",Toast.LENGTH_SHORT).show();
+                                                Intent intToMain = new Intent(QuestionsActivity.this, HomeActivity.class);
+                                                startActivity(intToMain);
+                                            }
+                                        }
 
         );
 
-    }
 
+
+    }
 }

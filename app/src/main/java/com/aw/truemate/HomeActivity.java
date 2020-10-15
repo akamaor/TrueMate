@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
 //this activity folliw the case of successful registraion.
@@ -37,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 
     //Edit info button direct to questions activity
     public void moveToQuestionActivity(View view) {
-        Intent intent = new Intent(this, QuestionsActivity1.class);
+        Intent intent = new Intent(this, QuestionsActivity.class);
         startActivity(intent);
     }
 }
