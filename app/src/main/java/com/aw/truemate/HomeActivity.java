@@ -86,7 +86,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        
+
 //Set onclick listener on ImageView
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
