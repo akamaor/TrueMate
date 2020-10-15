@@ -117,11 +117,26 @@
         android:text="My list"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/swipeButton"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-
+    <Button
+        android:id="@+id/QuestionsActivityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="moveToQuestionActivity"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="8dp"
+        android:text="Edit info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        tools:ignore="OnClick" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

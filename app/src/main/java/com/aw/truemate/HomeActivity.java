@@ -10,9 +10,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         btnSwipe=findViewById(R.id.swipeButton);
         btnLogout = findViewById(R.id.logoutButton);
         btnUpdate = findViewById(R.id.updateButton);
@@ -92,6 +96,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
 
 //Set onclick listener on ImageView
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -149,5 +154,13 @@ public class HomeActivity extends AppCompatActivity {
                         pd.setMessage("Percentage: "+(int) progressPercent+"%");
                     }
                 });
+
     }
+
+//     //Edit info button direct to questions activity
+//     public void moveToQuestionActivity(View view) {
+//         Intent intent = new Intent(this, QuestionsActivity.class);
+//         startActivity(intent);
+
+//     }
 }
