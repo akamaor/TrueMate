@@ -16,7 +16,7 @@ public class Firebase {
 
     public void updateCollection(String collectionName, String documentKey, Map<String, Object> details) {
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +documentKey);
-        document.set(details); // if document key don't exist- create new one. else override
+        document.set(details); // if document key don't exist- create new one. else overwrite
     }
 
     public Object readCollection(String collectionName,String detail, String userId){
