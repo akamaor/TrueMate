@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
 //this activity folliw the case of successful registraion.
@@ -24,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         btnSwipe=findViewById(R.id.swipeButton);
         btnLogout = findViewById(R.id.logoutButton);
         btnUpdate = findViewById(R.id.updateButton);
@@ -65,5 +65,12 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+    }
+
+    //Edit info button direct to questions activity
+    public void moveToQuestionActivity(View view) {
+        Intent intent = new Intent(this, QuestionsActivity.class);
+        startActivity(intent);
     }
 }

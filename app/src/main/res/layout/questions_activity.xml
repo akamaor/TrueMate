@@ -6,71 +6,82 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editCity"
+        android:id="@+id/editAge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
         android:ems="10"
+        android:hint="Age"
         android:inputType="textPersonName"
-        android:text="City"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="269dp" />
+        app:layout_constraintStart_toStartOf="@+id/editName"
+        app:layout_constraintTop_toBottomOf="@+id/editName" />
 
-    <EditText
-        android:id="@+id/editNeighborhood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Neighborhood"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="334dp" />
-
-    <EditText
-        android:id="@+id/editRoommate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Roommate Number"
-        tools:layout_editor_absoluteX="105dp"
-        tools:layout_editor_absoluteY="400dp" />
+    <Button
+        android:id="@+id/buttonUpdate"
+        android:layout_width="76dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="8dp"
+        android:text="Update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editRoommate" />
 
     <EditText
         android:id="@+id/editGender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:ems="10"
+        android:hint="Gender"
         android:inputType="textPersonName"
-        android:text="Gender"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="204dp" />
+        app:layout_constraintStart_toStartOf="@+id/editAge"
+        app:layout_constraintTop_toBottomOf="@+id/editAge" />
 
     <EditText
-        android:id="@+id/editAge"
+        android:id="@+id/editRoommate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="21dp"
         android:ems="10"
+        android:hint="Roommate Number"
         android:inputType="textPersonName"
-        android:text="Age"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="139dp" />
+        app:layout_constraintStart_toStartOf="@+id/editNeighborhood"
+        app:layout_constraintTop_toBottomOf="@+id/editNeighborhood" />
+
+    <EditText
+        android:id="@+id/editNeighborhood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Neighborhood"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/editCity"
+        app:layout_constraintTop_toBottomOf="@+id/editCity" />
+
+    <EditText
+        android:id="@+id/editCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="City"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/editGender"
+        app:layout_constraintTop_toBottomOf="@+id/editGender" />
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
         android:ems="10"
+        android:hint="Name"
         android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="74dp" />
-
-    <Button
-        android:id="@+id/buttonUpdate"
-        android:layout_width="213dp"
-        android:layout_height="49dp"
-        android:text="Update"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="459dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
