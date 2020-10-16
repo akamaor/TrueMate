@@ -3,6 +3,7 @@ package com.aw.truemate;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity {
     EditText emailId, password;
@@ -61,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
                             }
                             else {
                                 Firebase fb = new Firebase();
-                                userDetails user = new userDetails(email);
+                                userDetails user = new userDetails(fb.getUid(), email);
                                 fb.updateCollection("users", fb.getUid(), user.toMap());
 //                                fb.readCollection("users", "name", fb.getUid());
-                                startActivity(new Intent(MainActivity.this, QuestionsActivity.class));
+                                startActivity(new Intent(MainActivity.this, SwipeActivity.class));
                             }
                         }
                     });

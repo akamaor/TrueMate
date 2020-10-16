@@ -46,8 +46,8 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //
-                final userDetails uDetails = new userDetails("888u4ExM9w2jiWdCGNtE",editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
-                DB.updateCollection("users","anydocumentKey",uDetails.toMap());
+//                final userDetails uDetails = new userDetails("888u4ExM9w2jiWdCGNtE",editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
+//                DB.updateCollection("users","anydocumentKey",uDetails.toMap());
 
                 /*
                 userdb.addListenerForSingleValueEvent(new ValueEventListener() {

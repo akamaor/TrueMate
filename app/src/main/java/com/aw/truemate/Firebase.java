@@ -3,10 +3,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import com.google.firebase.firestore.Source;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Map;
 import java.lang.*;
@@ -19,10 +17,21 @@ public class Firebase {
         document.set(details); // if document key don't exist- create new one. else override
     }
 
-    public Object readCollection(String collectionName,String detail, String userId){
+    public Object readCollection(String collectionName, String field, String userId){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +userId);
         Task<DocumentSnapshot> s = document.get();
-        return s.getResult().get(detail);
+        return s.getResult().get(field);
+    }
+
+    public void updateFieldInDocument(String collectionName, String documentKey, String field, Object value){
+        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey + "/" + field);
+        document.set(value);
+    }
+
+    public Task<QuerySnapshot> getAllDocumentFromCollection(String collectionName){
+        Task<QuerySnapshot> collection = FirebaseFirestore.getInstance().collection("users").get();
+//        CollectionReference collection = FirebaseFirestore.getInstance().collection(collectionName);
+        return collection;
     }
 
     public String getUid(){
