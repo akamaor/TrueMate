@@ -65,15 +65,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="272dp"
-        android:layout_height="16dp"
-        android:text="Designed by macrovector/Freepik"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="10sp"/>
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
