@@ -1,4 +1,5 @@
 package com.aw.truemate;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -10,17 +11,23 @@ import java.util.Map;
 import java.lang.*;
 
 public class Firebase {
-    private FirebaseAuth mAuth= FirebaseAuth.getInstance();
+
+    private FirebaseAuth mAuth=FirebaseAuth.getInstance();
+
 
     public void updateCollection(String collectionName, String documentKey, Map<String, Object> details) {
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +documentKey);
-        document.set(details); // if document key don't exist- create new one. else override
+        document.set(details); // if document key don't exist- create new one. else overwrite
+    }
+
+    public String getUid(){
+        return mAuth.getCurrentUser().getUid();
     }
 
     public Object readCollection(String collectionName, String field, String userId){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +userId);
-        Task<DocumentSnapshot> s = document.get();
-        return s.getResult().get(field);
+        Task<DocumentSnapshot> source = document.get();
+        return source.getResult().get(field);
     }
 
     public void updateFieldInDocument(String collectionName, String documentKey, String field, Object value){
@@ -32,9 +39,5 @@ public class Firebase {
         Task<QuerySnapshot> collection = FirebaseFirestore.getInstance().collection("users").get();
 //        CollectionReference collection = FirebaseFirestore.getInstance().collection(collectionName);
         return collection;
-    }
-
-    public String getUid(){
-        return mAuth.getCurrentUser().getUid();
     }
 }

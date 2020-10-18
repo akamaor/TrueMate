@@ -3,18 +3,20 @@ package com.aw.truemate;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 
 public class QuestionsActivity<DB> extends AppCompatActivity {
     //layout
@@ -31,6 +33,10 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.questions_activity);
 
+        //create userID
+        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+        final String userID = mAuth.getCurrentUser().getUid();
+
         //create variable for the layout
         editName = (EditText) findViewById(R.id.editName);
         editAge = (EditText) findViewById(R.id.editAge);
@@ -39,34 +45,48 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
         editNeighborhood = (EditText) findViewById(R.id.editNeighborhood);
         editCity = (EditText) findViewById(R.id.editCity);
 
+        FirebaseFirestore FB=FirebaseFirestore.getInstance();
+        DocumentReference docRef = FB.collection("users").document(userID);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+
+                        editName.setText(document.getString("name"));
+                        editAge.setText(document.getString("age"));
+                        editGender.setText(document.getString("gender"));
+                        editCity.setText(document.getString("city"));
+                        editNeighborhood.setText(document.getString("neighborhood"));
+                        editRoommate.setText(document.getString("roommate_number"));
+                    } else {//no doc
+                    }
+                } else {//fail somehow
+                }
+            }
+        });
+        //editName.setText("234");
+
+
+
         buttonUpdate = (Button)findViewById(R.id.buttonUpdate);
 
         //Clicking on Update button
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //
-//                final userDetails uDetails = new userDetails("888u4ExM9w2jiWdCGNtE",editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
-//                DB.updateCollection("users","anydocumentKey",uDetails.toMap());
-
-                /*
-                userdb.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    //update action
-
-                            userdb.child(uDetails.getUser_id()).setValue(editName);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });*/
-            }
-        }
+                                            @Override
+                                            public void onClick(View v) {
+                                                //the Firebase doesent work well
+                                                final userDetails uDetails = new userDetails(userID ,editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
+                                                DB.updateCollection("users",userID,uDetails.toMap());
+                                                Toast.makeText(QuestionsActivity.this,"Update complete!",Toast.LENGTH_SHORT).show();
+                                                Intent intToMain = new Intent(QuestionsActivity.this, HomeActivity.class);
+                                                startActivity(intToMain);
+                                            }
+                                        }
 
         );
+
 
 
     }
