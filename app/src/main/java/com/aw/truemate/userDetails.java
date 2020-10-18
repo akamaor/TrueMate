@@ -14,10 +14,10 @@ public class userDetails {
     private String name;
     private String user_email;
     private String gender;
-    private int age;
+    private Object age;
     private String city;
     private List<String> neighborhood;
-    private int roommate_number;
+    private Object roommate_number;
     private LinkedHashMap<String, userDetails> likedList = new LinkedHashMap<>();
 
     public userDetails(){
@@ -40,7 +40,7 @@ public class userDetails {
         return gender;
     }
 
-    public int getAge() {
+    public Object getAge() {
         return age;
     }
 
@@ -52,7 +52,7 @@ public class userDetails {
         return neighborhood;
     }
 
-    public int getRoommate_number() {
+    public Object getRoommate_number() {
         return roommate_number;
     }
 
@@ -102,10 +102,10 @@ public class userDetails {
         this.user_email = (String)email;
         this.name = (String)name;
         this.gender = (String)gender;
-        this.age = (int)age;
+        this.age = age;
         this.city = (String)city;
         this.neighborhood = (List<String>)neighborhood;
-        this.roommate_number = (int)roommate_number;
+        this.roommate_number = roommate_number;
     }
 
     @Exclude

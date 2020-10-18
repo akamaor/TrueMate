@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TimeUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -17,16 +16,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-
-import okio.Timeout;
 
 public class SwipeActivity extends AppCompatActivity {
 
@@ -39,6 +37,7 @@ public class SwipeActivity extends AppCompatActivity {
     HashMap<String, userDetails> allUsers = new HashMap<>();
     Firebase fb = new Firebase();
     String userId = fb.getUid();
+    Iterator<userDetails> iterator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +45,12 @@ public class SwipeActivity extends AppCompatActivity {
 
         getAllUsersFromDB();
 
-        convertTaskToUserDetailsList();
-        deleteCurrentUserFromList();
-        final Iterator<userDetails> iterator = allUsers.values().iterator();
-        updateActivityContent(iterator);
-
-        setContentView(R.layout.activity_swipe);
+        startConvertDataFromDB();
+//        convertTaskToUserDetailsList();
+//        deleteCurrentUserFromList();
+//        final Iterator<userDetails> iterator = allUsers.values().iterator();
+//        updateActivityContent(iterator);
+//        setContentView(R.layout.activity_swipe);
 
         roommateText = findViewById(R.id.roommateText);
         likeButton = findViewById(R.id.like);
@@ -75,8 +74,24 @@ public class SwipeActivity extends AppCompatActivity {
         });
     }
 
+    private void startConvertDataFromDB() {
+        convertTaskToUserDetailsList();
+        deleteCurrentUserFromList();
+        initializeIterator();
+        showingData();
+    }
 
-    private synchronized void updateActivityContent(Iterator<userDetails> iterator) {
+    private void initializeIterator() {
+        iterator = allUsers.values().iterator();
+    }
+
+    private void showingData() {
+        updateActivityContent(iterator);
+        setContentView(R.layout.activity_swipe);
+    }
+
+
+    private void updateActivityContent(Iterator<userDetails> iterator) {
         userDetails userDisplay = getNextUser(iterator);
         if(userDisplay == null) {
             Toast.makeText(SwipeActivity.this, "No more users", Toast.LENGTH_LONG).show();
@@ -89,7 +104,7 @@ public class SwipeActivity extends AppCompatActivity {
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                     (this, android.R.layout.simple_list_item_1, neighborhoodList);
             userNeighborhoods.setAdapter(arrayAdapter);
-            roommateNumber.setText(userDisplay.getRoommate_number());
+            roommateNumber.setText((Integer) userDisplay.getRoommate_number());
         }
     }
 
@@ -107,18 +122,17 @@ public class SwipeActivity extends AppCompatActivity {
         fb.updateFieldInDocument("users", userId, "liked_list", userLikedList);
     }
 
-    private void getAllUsersFromDB() {
-        Task<QuerySnapshot> cr = fb.getAllDocumentFromCollection("users");
+    private void getAllUsersFromDB(){
+        final Task<QuerySnapshot> cr = fb.getAllDocumentFromCollection("users");
+        while (!cr.isComplete()){
+        }
+        usersFromFirebase = cr;
+
         cr.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     usersFromFirebase = task;
-//                    try {
-//                        SwipeActivity.this.wait();
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
                 } else {
                     Log.d("Error!", "Error getting documents: ", task.getException());
                 }
@@ -126,12 +140,12 @@ public class SwipeActivity extends AppCompatActivity {
         });
     }
 
-    private synchronized void convertTaskToUserDetailsList() {
+    private void convertTaskToUserDetailsList() {
         for(QueryDocumentSnapshot document : usersFromFirebase.getResult()) {
             userDetails user = new userDetails(
                     document.get("user_id"),
-                    document.get("user_email"),
                     document.get("name"),
+                    document.get("email"),
                     document.get("gender"),
                     document.get("age"),
                     document.get("city"),
@@ -142,7 +156,7 @@ public class SwipeActivity extends AppCompatActivity {
         }
     }
 
-    private synchronized void deleteCurrentUserFromList() {
+    private void deleteCurrentUserFromList() {
         allUsers.remove(userId);
     }
 }
