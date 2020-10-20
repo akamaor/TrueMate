@@ -14,8 +14,12 @@
         android:gravity="center"
         android:inputType="textPersonName"
         android:text="Name"
-        tools:layout_editor_absoluteX="-1dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
 
     <ImageView
         android:id="@+id/userImage"
@@ -23,42 +27,65 @@
         android:layout_height="232dp"
         tools:layout_editor_absoluteX="35dp"
         tools:layout_editor_absoluteY="90dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        app:layout_constraintBottom_toTopOf="@+id/neighborhoodList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userName"
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/dislike"
         android:layout_width="85dp"
         android:layout_height="82dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/like"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roommateNumber"
         app:srcCompat="@android:drawable/ic_delete"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="552dp" />
+        tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/like"
         android:layout_width="76dp"
         android:layout_height="82dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/roommateText"
         app:srcCompat="@android:drawable/checkbox_on_background"
-        tools:layout_editor_absoluteX="233dp"
-        tools:layout_editor_absoluteY="552dp" />
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/roommateText"
-        android:layout_width="169dp"
-        android:layout_height="44dp"
+        android:layout_width="152dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:gravity="center"
         android:text="מספר שותפים:"
-        tools:layout_editor_absoluteX="152dp"
-        tools:layout_editor_absoluteY="498dp" />
+        app:layout_constraintBottom_toTopOf="@+id/dislike"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/roommateNumber"
+        app:layout_constraintTop_toBottomOf="@+id/neighborhoodList"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/roommateNumber"
         android:layout_width="50dp"
-        android:layout_height="44dp"
+        android:layout_height="34dp"
         android:ems="10"
         android:gravity="center"
         android:inputType="number"
-        tools:layout_editor_absoluteX="88dp"
-        tools:layout_editor_absoluteY="498dp"
+        app:layout_constraintBottom_toTopOf="@+id/dislike"
+        app:layout_constraintEnd_toStartOf="@+id/roommateText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/neighborhoodList"
+        tools:ignore="MissingConstraints"
         tools:text="2" />
 
     <ListView
@@ -67,6 +94,12 @@
         android:layout_height="150dp"
         android:foregroundGravity="center"
         tools:layout_editor_absoluteX="17dp"
-        tools:layout_editor_absoluteY="338dp" />
+        tools:layout_editor_absoluteY="338dp"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintBottom_toTopOf="@+id/roommateText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userImage"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

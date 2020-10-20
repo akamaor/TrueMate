@@ -3,9 +3,11 @@ package com.aw.truemate;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -17,8 +19,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -30,8 +30,11 @@ public class SwipeActivity extends AppCompatActivity {
 
     ImageView userImage;
     ListView userNeighborhoods;
-    TextView userName, roommateNumber, roommateText;
-    ImageButton likeButton, dislikeButton;
+    TextView userName;
+    TextView roommateNumber;
+    TextView roommateText;
+    ImageButton likeButton ;
+    ImageButton dislikeButton;
 //    LinkedHashMap<String, userDetails> allUsersList = new LinkedHashMap<>();
     Task<QuerySnapshot> usersFromFirebase;
     HashMap<String, userDetails> allUsers = new HashMap<>();
@@ -43,6 +46,16 @@ public class SwipeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_swipe);
+
+        userImage = (ImageView) findViewById(R.id.imageView);
+        userNeighborhoods = (ListView) findViewById(R.id.neighborhoodList);
+        userName = (TextView) findViewById(R.id.userName);
+        roommateNumber = (TextView) findViewById(R.id.roommateNumber);
+        roommateText = (TextView) findViewById(R.id.roommateText);
+        likeButton = (ImageButton) findViewById(R.id.like);
+        dislikeButton = (ImageButton) findViewById(R.id.dislike);
+
         getAllUsersFromDB();
 
         startConvertDataFromDB();
@@ -50,11 +63,6 @@ public class SwipeActivity extends AppCompatActivity {
 //        deleteCurrentUserFromList();
 //        final Iterator<userDetails> iterator = allUsers.values().iterator();
 //        updateActivityContent(iterator);
-//        setContentView(R.layout.activity_swipe);
-
-        roommateText = findViewById(R.id.roommateText);
-        likeButton = findViewById(R.id.like);
-        dislikeButton = findViewById(R.id.dislike);
 
 
         likeButton.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +95,6 @@ public class SwipeActivity extends AppCompatActivity {
 
     private void showingData() {
         updateActivityContent(iterator);
-        setContentView(R.layout.activity_swipe);
     }
 
 
@@ -104,7 +111,7 @@ public class SwipeActivity extends AppCompatActivity {
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                     (this, android.R.layout.simple_list_item_1, neighborhoodList);
             userNeighborhoods.setAdapter(arrayAdapter);
-            roommateNumber.setText((Integer) userDisplay.getRoommate_number());
+            roommateNumber.setText((String)userDisplay.getRoommate_number());
         }
     }
 

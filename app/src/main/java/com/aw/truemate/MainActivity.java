@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                                 userDetails user = new userDetails(fb.getUid(), email);
                                 fb.updateCollection("users", fb.getUid(), user.toMap());
 //                                fb.readCollection("users", "name", fb.getUid());
-                                startActivity(new Intent(MainActivity.this, SwipeActivity.class));
+                                startActivity(new Intent(MainActivity.this, QuestionsActivity.class));
                             }
                         }
                     });

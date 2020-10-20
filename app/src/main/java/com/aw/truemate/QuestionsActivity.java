@@ -76,9 +76,17 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                //the Firebase doesent work well
-                                                final userDetails uDetails = new userDetails(userID ,editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
-                                                DB.updateCollection("users",userID,uDetails.toMap());
+                                                //the Firebase doesn't work well
+                                                final userDetails uDetails = new userDetails(
+                                                        userID,
+                                                        editName.getText().toString(),
+                                                        "some email. just for try",
+                                                        editGender.getText().toString(),
+                                                        editAge.getText().toString(),
+                                                        editCity.getText().toString(),
+                                                        editNeighborhood.getText().toString(),
+                                                        editRoommate.getText().toString());
+                                                DB.updateCollection("users", userID, uDetails.toMap());
                                                 Toast.makeText(QuestionsActivity.this,"Update complete!",Toast.LENGTH_SHORT).show();
                                                 Intent intToMain = new Intent(QuestionsActivity.this, HomeActivity.class);
                                                 startActivity(intToMain);

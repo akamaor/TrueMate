@@ -3,6 +3,7 @@ package com.aw.truemate;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Map;
 public class userDetails {
     private String user_id;
     private String name;
-    private String user_email;
+    private Object user_email;
     private String gender;
     private Object age;
     private String city;
@@ -28,7 +29,7 @@ public class userDetails {
         return user_id;
     }
 
-    public String getUser_email() {
+    public Object getUser_email() {
         return user_email;
     }
 
@@ -99,12 +100,12 @@ public class userDetails {
 
     public userDetails(Object user_id, Object name, Object email, Object gender, Object age, Object city, Object neighborhood, Object roommate_number){
         this.user_id = (String)user_id;
-        this.user_email = (String)email;
+        this.user_email = email;
         this.name = (String)name;
         this.gender = (String)gender;
         this.age = age;
         this.city = (String)city;
-        this.neighborhood = (List<String>)neighborhood;
+        this.neighborhood = Arrays.asList(neighborhood.toString().split(","));
         this.roommate_number = roommate_number;
     }
 

@@ -7,12 +7,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.lang.*;
 
 public class Firebase {
 
-    private FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
     public void updateCollection(String collectionName, String documentKey, Map<String, Object> details) {
@@ -24,6 +25,8 @@ public class Firebase {
         return mAuth.getCurrentUser().getUid();
     }
 
+
+    //todo: this function is not working!!!!
     public Object readCollection(String collectionName, String field, String userId){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +userId);
         Task<DocumentSnapshot> source = document.get();
@@ -35,8 +38,14 @@ public class Firebase {
         document.set(value);
     }
 
+    public Object getFieldInDocument(String collectionName, String documentKey, String field){
+        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey + "/" + field);
+        Object res = document.get();
+        return res;
+    }
+
     public Task<QuerySnapshot> getAllDocumentFromCollection(String collectionName){
-        Task<QuerySnapshot> collection = FirebaseFirestore.getInstance().collection("users").get();
+        Task<QuerySnapshot> collection = FirebaseFirestore.getInstance().collection(collectionName).get();
 //        CollectionReference collection = FirebaseFirestore.getInstance().collection(collectionName);
         return collection;
     }
