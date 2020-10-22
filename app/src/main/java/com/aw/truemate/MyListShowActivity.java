@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+//todo:fixing the back button
 public class MyListShowActivity extends AppCompatActivity {
     ImageView Image;
     TextView Title,Describtion;
@@ -19,7 +19,7 @@ public class MyListShowActivity extends AppCompatActivity {
         Image = findViewById(R.id.image);
         Title = findViewById(R.id.title);
         Describtion = findViewById(R.id.describtion);
-        int position = 0;
+        //int position = 0;
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -27,22 +27,18 @@ public class MyListShowActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
+        //get all the data from my list activity
+        Intent intent = getIntent();
 
-        if (position == 0) {
-            Intent intent = getIntent();
+        Bundle bundle = this.getIntent().getExtras();
+        int pic = bundle.getInt("image");
+        String aTitle = intent.getStringExtra("title");
+        String aDescription = intent.getStringExtra("description");
 
-            Bundle bundle = this.getIntent().getExtras();
-            int pic = bundle.getInt("image");
-            String aTitle = intent.getStringExtra("title");
-            String aDescription = intent.getStringExtra("description");
+        Image.setImageResource(pic);
+        Title.setText(aTitle);
+        Describtion.setText(aDescription);
 
-            Image.setImageResource(pic);
-            Title.setText(aTitle);
-            Describtion.setText(aDescription);
-
-            actionBar.setTitle(aTitle);
-        }else {
-        //not
-        }
+        actionBar.setTitle(aTitle);
     }
 }
