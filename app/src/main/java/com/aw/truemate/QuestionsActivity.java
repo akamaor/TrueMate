@@ -47,13 +47,13 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
 
         FirebaseFirestore FB=FirebaseFirestore.getInstance();
         DocumentReference docRef = FB.collection("users").document(userID);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        Source source = Source.CACHE;
+        docRef.get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document != null) {
-
                         editName.setText(document.getString("name"));
                         editAge.setText(document.getString("age"));
                         editGender.setText(document.getString("gender"));
