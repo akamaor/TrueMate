@@ -3,11 +3,10 @@ package com.aw.truemate;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -24,7 +23,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class SwipeActivity extends AppCompatActivity {
 
@@ -57,8 +58,8 @@ public class SwipeActivity extends AppCompatActivity {
         dislikeButton = (ImageButton) findViewById(R.id.dislike);
 
         getAllUsersFromDB();
+//        startConvertDataFromDB();
 
-        startConvertDataFromDB();
 //        convertTaskToUserDetailsList();
 //        deleteCurrentUserFromList();
 //        final Iterator<userDetails> iterator = allUsers.values().iterator();
@@ -74,7 +75,6 @@ public class SwipeActivity extends AppCompatActivity {
         });
 
         dislikeButton.setOnClickListener( new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 updateActivityContent(iterator);
@@ -97,7 +97,6 @@ public class SwipeActivity extends AppCompatActivity {
         updateActivityContent(iterator);
     }
 
-
     private void updateActivityContent(Iterator<userDetails> iterator) {
         userDetails userDisplay = getNextUser(iterator);
         if(userDisplay == null) {
@@ -107,6 +106,7 @@ public class SwipeActivity extends AppCompatActivity {
         } else {
             userName.setText(userDisplay.getName());
 //            todo: update image!!! userImage.setImage(userDisplay.getImage());
+//            userImage.setImageURI().setImageIcon(new Icon);set.setImage(userDisplay.getImage());
             List<String> neighborhoodList = userDisplay.getNeighborhood();
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                     (this, android.R.layout.simple_list_item_1, neighborhoodList);
@@ -123,23 +123,33 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     private void addLikedItemToList() {
-        List<Object> userLikedList = (List<Object>)fb.readCollection("users", "likedList", userId);
-        userDetails likedUser = allUsers.get(userId);
-        userLikedList.add(likedUser.getUser_id());
-        fb.updateFieldInDocument("users", userId, "liked_list", userLikedList);
+        final List<Object>[] userLikedList = new List[]{new LinkedList<>()};
+        fb.readCollection("users", "liked_list", userId, new FirebaseCallback() {
+            @Override
+            public void onCallback(Object obj) {
+                userLikedList[0] = (List<Object>) obj;
+                userDetails likedUser = allUsers.get(userId);
+                userLikedList[0].add(likedUser.getUser_id());
+                Map<String, Object> likedListMap = new HashMap<>();
+                likedListMap.put("liked_list", userLikedList[0]);
+                fb.updateFieldInDocument("users", userId, likedListMap);
+            }
+        });
     }
 
     private void getAllUsersFromDB(){
         final Task<QuerySnapshot> cr = fb.getAllDocumentFromCollection("users");
-        while (!cr.isComplete()){
-        }
-        usersFromFirebase = cr;
+//        while (!cr.isComplete()){
+//        }
+//        usersFromFirebase = cr;
 
         cr.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     usersFromFirebase = task;
+                    startConvertDataFromDB();
+
                 } else {
                     Log.d("Error!", "Error getting documents: ", task.getException());
                 }

@@ -1,5 +1,8 @@
 package com.aw.truemate;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,22 +30,30 @@ public class Firebase {
 
 
     //todo: this function is not working!!!!
-    public Object readCollection(String collectionName, String field, String userId){
+    public void readCollection(String collectionName, final String field, String userId, final FirebaseCallback fbCallback){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +userId);
-        Task<DocumentSnapshot> source = document.get();
-        return source.getResult().get(field);
+        final Task<DocumentSnapshot> source = document.get();
+        source.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    Object value = source.getResult().get(field);
+                    fbCallback.onCallback(value);
+                }
+            }
+        });
     }
 
-    public void updateFieldInDocument(String collectionName, String documentKey, String field, Object value){
-        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey + "/" + field);
-        document.set(value);
+    public void updateFieldInDocument(String collectionName, String documentKey, Map<String, Object> fieldValueMap){
+        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey);
+        document.set(fieldValueMap);
     }
 
-    public Object getFieldInDocument(String collectionName, String documentKey, String field){
-        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey + "/" + field);
-        Object res = document.get();
-        return res;
-    }
+//    public Object getFieldInDocument(String collectionName, String documentKey, String field){
+//        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey + "/" + field);
+//        Object res = document.get();
+//        return res;
+//    }
 
     public Task<QuerySnapshot> getAllDocumentFromCollection(String collectionName){
         Task<QuerySnapshot> collection = FirebaseFirestore.getInstance().collection(collectionName).get();
