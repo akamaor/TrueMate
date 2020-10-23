@@ -36,7 +36,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
         //create userID
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
         final String userID = mAuth.getCurrentUser().getUid();
-
+        final String email = mAuth.getCurrentUser().getEmail();
         //create variable for the layout
         editName = (EditText) findViewById(R.id.editName);
         editAge = (EditText) findViewById(R.id.editAge);
@@ -80,7 +80,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
                                                 final userDetails uDetails = new userDetails(
                                                         userID,
                                                         editName.getText().toString(),
-                                                        "some email. just for try",
+                                                        email,
                                                         editGender.getText().toString(),
                                                         editAge.getText().toString(),
                                                         editCity.getText().toString(),
@@ -94,8 +94,5 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
                                         }
 
         );
-
-
-
     }
 }

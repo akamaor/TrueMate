@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -42,6 +43,7 @@ public class SwipeActivity extends AppCompatActivity {
     Firebase fb = new Firebase();
     String userId = fb.getUid();
     Iterator<userDetails> iterator;
+    String displayUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +71,8 @@ public class SwipeActivity extends AppCompatActivity {
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addLikedItemToList();
-                updateActivityContent(iterator);
+                addLikedItemToListAndUpdateActivityContent();
+//                updateActivityContent(iterator);
             }
         });
 
@@ -99,11 +101,13 @@ public class SwipeActivity extends AppCompatActivity {
 
     private void updateActivityContent(Iterator<userDetails> iterator) {
         userDetails userDisplay = getNextUser(iterator);
+
         if(userDisplay == null) {
             Toast.makeText(SwipeActivity.this, "No more users", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(SwipeActivity.this, HomeActivity.class);
             startActivity(intent);
         } else {
+            displayUserID = userDisplay.getUser_id();
             userName.setText(userDisplay.getName());
 //            todo: update image!!! userImage.setImage(userDisplay.getImage());
 //            userImage.setImageURI().setImageIcon(new Icon);set.setImage(userDisplay.getImage());
@@ -122,17 +126,24 @@ public class SwipeActivity extends AppCompatActivity {
         return nextUser;
     }
 
-    private void addLikedItemToList() {
-        final List<Object>[] userLikedList = new List[]{new LinkedList<>()};
+    private void addLikedItemToListAndUpdateActivityContent() {
+//        final List<Object>[] userLikedList = new List[]{new LinkedList<>()};
+//        final List<Object> userLikedList = new LinkedList<>();
+        final HashMap<Object, Object>[] userLikedList = new HashMap[]{new HashMap<>()};
         fb.readCollection("users", "liked_list", userId, new FirebaseCallback() {
             @Override
             public void onCallback(Object obj) {
-                userLikedList[0] = (List<Object>) obj;
-                userDetails likedUser = allUsers.get(userId);
-                userLikedList[0].add(likedUser.getUser_id());
-                Map<String, Object> likedListMap = new HashMap<>();
-                likedListMap.put("liked_list", userLikedList[0]);
-                fb.updateFieldInDocument("users", userId, likedListMap);
+//                userLikedList.add(obj);
+
+                userLikedList[0] = (HashMap<Object, Object>) obj;
+                userDetails likedUser = allUsers.get(displayUserID);
+                userLikedList[0].put(likedUser.getUser_id(), likedUser);
+//                Map<String, Object> likedListMap = new HashMap<>();
+//                likedListMap.put("liked_list", userLikedList[0]);
+//                fb.updateFieldInDocument("users", userId, likedListMap);
+
+                fb.updateFieldInDocument("users", userId, "liked_list", userLikedList);
+                updateActivityContent(iterator);
             }
         });
     }
