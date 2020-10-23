@@ -112,7 +112,7 @@ public class userDetails {
     @Exclude
     public Map<String, Object> toMap(){
         Map<String, Object> userDetails = new HashMap<>();
-        userDetails.put("user_id", user_id); // user_id is an email
+        userDetails.put("user_id", user_id);
         userDetails.put("email", user_email);
         userDetails.put("name", name);
         userDetails.put("gender", gender);

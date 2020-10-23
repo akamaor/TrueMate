@@ -9,8 +9,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.lang.*;
 
@@ -44,9 +46,9 @@ public class Firebase {
         });
     }
 
-    public void updateFieldInDocument(String collectionName, String documentKey, Map<String, Object> fieldValueMap){
+    public void updateFieldInDocument(String collectionName, String documentKey, String field, HashMap<Object, Object>[] fieldValueMap){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey);
-        document.set(fieldValueMap);
+        document.update(field, fieldValueMap[0]);
     }
 
 //    public Object getFieldInDocument(String collectionName, String documentKey, String field){
