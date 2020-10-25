@@ -190,7 +190,7 @@ public MyListAdapter adapter;
     private HashMap<String, userDetails> getLikedList() {
         HashMap<String, userDetails> likedUsersMap = new HashMap<>();
         userDetails currentUser = allUsers.get(userID);
-        Set<String> likedUsersID = currentUser.getLikedList().keySet();
+        List<String> likedUsersID = currentUser.getLikedList();
         for(String key : likedUsersID){
             userDetails user = allUsers.get(key);
             likedUsersMap.put(key, user);

@@ -3,9 +3,9 @@ package com.aw.truemate;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +19,8 @@ public class userDetails {
     private String city;
     private List<String> neighborhood;
     private Object roommate_number;
-    private HashMap<String, userDetails> likedList = new HashMap<>();
+    private List<String> likedList = new ArrayList<>();
+//    private HashMap<String, userDetails> likedList = new HashMap<>();
 
     public userDetails(){
         //default constructor
@@ -57,7 +58,7 @@ public class userDetails {
         return roommate_number;
     }
 
-    public HashMap<String, userDetails> getLikedList() {
+    public List<String> getLikedList() {
         return likedList;
     }
 
@@ -89,7 +90,7 @@ public class userDetails {
         this.roommate_number = roommate_number;
     }
 
-    public void setLikedList(HashMap<String, userDetails> likedList) {
+    public void setLikedList(List<String> likedList) {
         this.likedList = likedList;
     }
 
@@ -107,7 +108,7 @@ public class userDetails {
         this.city = (String)city;
         this.neighborhood = Arrays.asList(neighborhood.toString().split(","));
         this.roommate_number = roommate_number;
-        this.likedList = (HashMap<String, userDetails>) likedList;
+        this.likedList = (List<String>) likedList;
     }
 
     @Exclude

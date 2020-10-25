@@ -45,9 +45,10 @@ public class Firebase {
         });
     }
 
-    public void updateFieldInDocument(String collectionName, String documentKey, String field, HashMap<Object, Object>[] fieldValueMap){
+    public void updateFieldInDocument(String collectionName, String documentKey, String field, Object fieldValue){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey);
-        document.update(field, fieldValueMap[0]);
+        document.update(field, fieldValue);
+//        document.update(field, fieldValueMap[0]);
     }
 
 //    public Object getFieldInDocument(String collectionName, String documentKey, String field){

@@ -19,12 +19,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class QuestionsActivity<DB> extends AppCompatActivity {
     //layout
     EditText editName,editAge,editGender,editRoommate,editNeighborhood,editCity;
     Button buttonUpdate;
-    HashMap<String, userDetails> editLikedList;
+    List<String> editLikedList;
 
     //Firebase database
     /*public DatabaseReference DB = FirebaseDatabase.getInstance().getReference();
@@ -64,7 +65,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
                         editCity.setText(document.getString("city"));
                         editNeighborhood.setText(document.getString("neighborhood"));
                         editRoommate.setText(document.getString("roommate_number"));
-                        editLikedList = (HashMap<String, userDetails>) document.get("liked_list");
+                        editLikedList = (List<String>) document.get("liked_list");
                     } else {//no doc
                     }
                 } else {//fail somehow

@@ -107,14 +107,15 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     private void addLikedItemToListAndUpdateActivityContent() {
-        final HashMap<Object, Object>[] userLikedList = new HashMap[]{new HashMap<>()};
+//        final HashMap<Object, Object>[] userLikedList = new HashMap[]{new HashMap<>()};
+        final List<Object>[] userLikedListID = new List[]{new ArrayList<>()};
         fb.readCollection("users", "liked_list", userId, new FirebaseCallback() {
             @Override
             public void onCallback(Object obj) {
-                userLikedList[0] = (HashMap<Object, Object>) obj;
+                userLikedListID[0] = ((List<Object>) obj);
                 userDetails likedUser = allUsers.get(displayUserID);
-                userLikedList[0].put(likedUser.getUser_id(), likedUser);
-                fb.updateFieldInDocument("users", userId, "liked_list", userLikedList);
+                userLikedListID[0].add(likedUser.getUser_id());
+                fb.updateFieldInDocument("users", userId, "liked_list", userLikedListID[0]);
                 updateActivityContent(iterator);
             }
         });
