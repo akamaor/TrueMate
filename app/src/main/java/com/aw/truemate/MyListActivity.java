@@ -15,26 +15,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.Set;
 
 public class MyListActivity extends AppCompatActivity {
     ListView listView;
@@ -45,9 +40,14 @@ public class MyListActivity extends AppCompatActivity {
     //public ArrayList<String> mTitle = new ArrayList();
     //public String mDescription[] = {"Facebook Description", "WhatsApp Description", "Twitter Description", "Instagram Description", "Youtube Description"};
 
-    public List<String> lLikedList =new ArrayList<String>();
-    public List<String> lTitle =new ArrayList<String>();
-    public List<String> lDescription =new ArrayList<String>();
+    Firebase fb = new Firebase();
+    Task<QuerySnapshot> usersFromFirebase;
+    HashMap<String, userDetails> allUsers = new HashMap<>();
+
+
+    public HashMap<String, userDetails> lLikedList = new HashMap<>();
+    public List<String> lTitle =new ArrayList<>();
+    public List<String> lDescription =new ArrayList<>();
     public int mimages[] = {0, 0,0,0,0,0,0};
     //mTitle.add();
 
@@ -78,15 +78,18 @@ public MyListAdapter adapter;
 
         //adding example date for the test
         lTitle.add("Facebook");
-        lTitle.add("WhatsApp");
-        lTitle.add("Twitter");
-        lTitle.add("Instagram");
+//        lTitle.add("WhatsApp");
+//        lTitle.add("Twitter");
+//        lTitle.add("Instagram");
         lDescription.add("Facebook Description");
-        lDescription.add("WhatsApp Description");
-        lDescription.add("Twitter Description");
-        lDescription.add("Instagram Description");
+//        lDescription.add("WhatsApp Description");
+//        lDescription.add("Twitter Description");
+//        lDescription.add("Instagram Description");
 
         listView = findViewById(R.id.listView);
+
+
+        getDataFromDB();
 
         adapter = new MyListAdapter(this, lTitle, lDescription, mimages);
         listView.setAdapter(adapter);
@@ -111,55 +114,106 @@ public MyListAdapter adapter;
             }
         });
 
-
         //todo: after loading the data load the other data with this liked list data
         //todo: make the list visible && updating the data inside
         //Load data from DataBase
 
-        FirebaseFirestore FB=FirebaseFirestore.getInstance();
-        docRef.document(userID).get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-
-                    if (document != null) {
-                        liked_list= document.get("liked_list");
-                        Toast.makeText(MyListActivity.this,"finish mission",Toast.LENGTH_SHORT).show();
- /*                       for (int i=0;i<2;i++){
-                            docRef.document(userID).get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document2 = task.getResult();
-                                        if (document2 != null) {
-                                            lTitle.add(document2.get("name").toString() + " " + document2.get("age").toString());
-                                            lDescription.add(document2.get("city").toString() + " " + document2.get("neighborhood").toString());
-                                        }
-                                    }
-                                }
-                            });
-                        }*/
-                        //update the adapter
-                        adapter.notifyDataSetChanged();
-                    } else {//no doc
-                    }
-                } else {//fail somehow
-                }
-            }
-        });
-
-/*                        //adding new data like would happend when we add th DB
-                        lTitle.add("Youtube");
-                        lDescription.add("Youtube Description");
-                        //update the adapter
-                        adapter.notifyDataSetChanged();*/
+//        FirebaseFirestore FB=FirebaseFirestore.getInstance();
+//        System.out.println("before listener");
+//        docRef.document(userID).get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                System.out.println("inside listener");
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot document = task.getResult();
+//                    System.out.println("inside isSuccessful");
+//                    if (document != null) {
+//                        System.out.println("inside document != null");
+//                        liked_list = document.get("liked_list");
+//                        Toast.makeText(MyListActivity.this,"finish mission",Toast.LENGTH_SHORT).show();
+// /*                       for (int i=0;i<2;i++){
+//                            docRef.document(userID).get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                                    if (task.isSuccessful()) {
+//                                        DocumentSnapshot document2 = task.getResult();
+//                                        if (document2 != null) {
+//                                            lTitle.add(document2.get("name").toString() + " " + document2.get("age").toString());
+//                                            lDescription.add(document2.get("city").toString() + " " + document2.get("neighborhood").toString());
+//                                        }
+//                                    }
+//                                }
+//                            });
+//                        }*/
+//                        //update the adapter
+//                        adapter.notifyDataSetChanged();
+//                    } else {//no doc
+//                    }
+//                } else {//fail somehow
+//                }
+//            }
+//        });
+//        System.out.println("after listener");
+//
+///*                        //adding new data like would happend when we add th DB
+//                        lTitle.add("Youtube");
+//                        lDescription.add("Youtube Description");
+//                        //update the adapter
+//                        adapter.notifyDataSetChanged();*/
 
     }
 
+    private void getDataFromDB(){
+        final Task<QuerySnapshot> allDocuments = fb.getAllDocumentFromCollection("users");
+        allDocuments.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    usersFromFirebase = task;
+                    convertTaskToUserDetailsList();
+                    lLikedList = getLikedList();
+                    //todo: edit fields
+                    updateMyList();
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
 
+    private void updateMyList() {
+        for(userDetails user : lLikedList.values()){
+            lTitle.add(user.getName() + " " + user.getAge());
+            lDescription.add(user.getGender() + " " + user.getCity()+ " " + user.getNeighborhood());
+        }
+    }
 
+    private HashMap<String, userDetails> getLikedList() {
+        HashMap<String, userDetails> likedUsersMap = new HashMap<>();
+        userDetails currentUser = allUsers.get(userID);
+        List<String> likedUsersID = currentUser.getLikedList();
+        for(String key : likedUsersID){
+            userDetails user = allUsers.get(key);
+            likedUsersMap.put(key, user);
+        }
+        return likedUsersMap;
+    }
+
+    private void convertTaskToUserDetailsList() {
+        for(QueryDocumentSnapshot document : usersFromFirebase.getResult()) {
+            userDetails user = new userDetails(
+                    document.get("user_id"),
+                    document.get("name"),
+                    document.get("email"),
+                    document.get("gender"),
+                    document.get("age"),
+                    document.get("city"),
+                    document.get("neighborhood"),
+                    document.get("roommate_number"),
+                    document.get("liked_list"));
+
+            allUsers.put((String)document.get("user_id"), user);
+        }
+    }
 
 
     //adapter
