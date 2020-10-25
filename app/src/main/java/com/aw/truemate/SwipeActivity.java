@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,9 +25,10 @@ public class SwipeActivity extends AppCompatActivity {
     ImageButton likeButton ;
     ImageButton dislikeButton;
     Task<QuerySnapshot> usersFromFirebase;
-    HashMap<String, userDetails> allUsers = new HashMap<>();
+    HashMap<String, userDetails> allUsersMap = new HashMap<>();
     Firebase fb = new Firebase();
     String userId = fb.getUid();
+//    AllUsers allUsers = new AllUsers();
     Iterator<userDetails> iterator;
     String displayUserID;
 
@@ -65,14 +65,14 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     private void startConvertDataFromDBAndShowingUsers() {
-        convertTaskToUserDetailsList();
+        allUsersMap = AllUsers.convertTaskToUserDetailsList(usersFromFirebase);
         deleteCurrentUserFromList();
         initializeIterator();
         showingData();
     }
 
     private void initializeIterator() {
-        iterator = allUsers.values().iterator();
+        iterator = allUsersMap.values().iterator();
     }
 
     private void showingData() {
@@ -113,7 +113,7 @@ public class SwipeActivity extends AppCompatActivity {
             @Override
             public void onCallback(Object obj) {
                 userLikedListID[0] = ((List<Object>) obj);
-                userDetails likedUser = allUsers.get(displayUserID);
+                userDetails likedUser = allUsersMap.get(displayUserID);
                 userLikedListID[0].add(likedUser.getUser_id());
                 fb.updateFieldInDocument("users", userId, "liked_list", userLikedListID[0]);
                 updateActivityContent(iterator);
@@ -136,24 +136,24 @@ public class SwipeActivity extends AppCompatActivity {
         });
     }
 
-    private void convertTaskToUserDetailsList() {
-        for(QueryDocumentSnapshot document : usersFromFirebase.getResult()) {
-            userDetails user = new userDetails(
-                    document.get("user_id"),
-                    document.get("name"),
-                    document.get("email"),
-                    document.get("gender"),
-                    document.get("age"),
-                    document.get("city"),
-                    document.get("neighborhood"),
-                    document.get("roommate_number"),
-                    document.get("liked_list"));
-
-            allUsers.put((String)document.get("user_id"), user);
-        }
-    }
+//    private void convertTaskToUserDetailsList() {
+//        for(QueryDocumentSnapshot document : this.usersFromFirebase.getResult()) {
+//            userDetails user = new userDetails(
+//                    document.get("user_id"),
+//                    document.get("name"),
+//                    document.get("email"),
+//                    document.get("gender"),
+//                    document.get("age"),
+//                    document.get("city"),
+//                    document.get("neighborhood"),
+//                    document.get("roommate_number"),
+//                    document.get("liked_list"));
+//
+//            allUsersMap.put((String)document.get("user_id"), user);
+//        }
+//    }
 
     private void deleteCurrentUserFromList() {
-        allUsers.remove(userId);
+        allUsersMap.remove(userId);
     }
 }

@@ -2,18 +2,11 @@ package com.aw.truemate;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.lang.*;
 
 public class Firebase {
@@ -48,18 +41,11 @@ public class Firebase {
     public void updateFieldInDocument(String collectionName, String documentKey, String field, Object fieldValue){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey);
         document.update(field, fieldValue);
-//        document.update(field, fieldValueMap[0]);
     }
 
-//    public Object getFieldInDocument(String collectionName, String documentKey, String field){
-//        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey + "/" + field);
-//        Object res = document.get();
-//        return res;
-//    }
 
     public Task<QuerySnapshot> getAllDocumentFromCollection(String collectionName){
         Task<QuerySnapshot> collection = FirebaseFirestore.getInstance().collection(collectionName).get();
-//        CollectionReference collection = FirebaseFirestore.getInstance().collection(collectionName);
         return collection;
     }
 }
