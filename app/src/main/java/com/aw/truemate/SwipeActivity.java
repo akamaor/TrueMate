@@ -136,22 +136,22 @@ public class SwipeActivity extends AppCompatActivity {
         });
     }
 
-    private void convertTaskToUserDetailsList() {
-        for(QueryDocumentSnapshot document : this.usersFromFirebase.getResult()) {
-            userDetails user = new userDetails(
-                    document.get("user_id"),
-                    document.get("name"),
-                    document.get("email"),
-                    document.get("gender"),
-                    document.get("age"),
-                    document.get("city"),
-                    document.get("neighborhood"),
-                    document.get("roommate_number"),
-                    document.get("liked_list"));
-
-            allUsersMap.put((String)document.get("user_id"), user);
-        }
-    }
+//    private void convertTaskToUserDetailsList() {
+//        for(QueryDocumentSnapshot document : this.usersFromFirebase.getResult()) {
+//            userDetails user = new userDetails(
+//                    document.get("user_id"),
+//                    document.get("name"),
+//                    document.get("email"),
+//                    document.get("gender"),
+//                    document.get("age"),
+//                    document.get("city"),
+//                    document.get("neighborhood"),
+//                    document.get("roommate_number"),
+//                    document.get("liked_list"));
+//
+//            allUsersMap.put((String)document.get("user_id"), user);
+//        }
+//    }
 
     private void deleteCurrentUserFromList() {
         allUsersMap.remove(userId);
