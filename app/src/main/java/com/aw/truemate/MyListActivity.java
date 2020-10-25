@@ -42,7 +42,7 @@ public class MyListActivity extends AppCompatActivity {
 
     Firebase fb = new Firebase();
     Task<QuerySnapshot> usersFromFirebase;
-    HashMap<String, userDetails> allUsers = new HashMap<>();
+    HashMap<String, userDetails> allUsersMap = new HashMap<>();
 
 
     public HashMap<String, userDetails> lLikedList = new HashMap<>();
@@ -170,9 +170,8 @@ public MyListAdapter adapter;
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     usersFromFirebase = task;
-                    convertTaskToUserDetailsList();
+                    allUsersMap = AllUsers.convertTaskToUserDetailsList(usersFromFirebase);
                     lLikedList = getLikedList();
-                    //todo: edit fields
                     updateMyList();
                     adapter.notifyDataSetChanged();
                 }
@@ -189,31 +188,31 @@ public MyListAdapter adapter;
 
     private HashMap<String, userDetails> getLikedList() {
         HashMap<String, userDetails> likedUsersMap = new HashMap<>();
-        userDetails currentUser = allUsers.get(userID);
+        userDetails currentUser = allUsersMap.get(userID);
         List<String> likedUsersID = currentUser.getLikedList();
         for(String key : likedUsersID){
-            userDetails user = allUsers.get(key);
+            userDetails user = allUsersMap.get(key);
             likedUsersMap.put(key, user);
         }
         return likedUsersMap;
     }
 
-    private void convertTaskToUserDetailsList() {
-        for(QueryDocumentSnapshot document : usersFromFirebase.getResult()) {
-            userDetails user = new userDetails(
-                    document.get("user_id"),
-                    document.get("name"),
-                    document.get("email"),
-                    document.get("gender"),
-                    document.get("age"),
-                    document.get("city"),
-                    document.get("neighborhood"),
-                    document.get("roommate_number"),
-                    document.get("liked_list"));
-
-            allUsers.put((String)document.get("user_id"), user);
-        }
-    }
+//    private void convertTaskToUserDetailsList() {
+//        for(QueryDocumentSnapshot document : usersFromFirebase.getResult()) {
+//            userDetails user = new userDetails(
+//                    document.get("user_id"),
+//                    document.get("name"),
+//                    document.get("email"),
+//                    document.get("gender"),
+//                    document.get("age"),
+//                    document.get("city"),
+//                    document.get("neighborhood"),
+//                    document.get("roommate_number"),
+//                    document.get("liked_list"));
+//
+//            allUsers.put((String)document.get("user_id"), user);
+//        }
+//    }
 
 
     //adapter
