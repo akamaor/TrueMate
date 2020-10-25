@@ -19,7 +19,7 @@ public class userDetails {
     private String city;
     private List<String> neighborhood;
     private Object roommate_number;
-    private LinkedHashMap<String, userDetails> likedList = new LinkedHashMap<>();
+    private HashMap<String, userDetails> likedList = new HashMap<>();
 
     public userDetails(){
         //default constructor
@@ -57,7 +57,7 @@ public class userDetails {
         return roommate_number;
     }
 
-    public LinkedHashMap<String, userDetails> getLikedList() {
+    public HashMap<String, userDetails> getLikedList() {
         return likedList;
     }
 
@@ -73,7 +73,7 @@ public class userDetails {
         this.gender = gender;
     }
 
-    public void setUser_email_email(String user_email) {
+    public void setUser_email(String user_email) {
         this.gender = user_email;
     }
 
@@ -89,7 +89,7 @@ public class userDetails {
         this.roommate_number = roommate_number;
     }
 
-    public void setLikedList(LinkedHashMap<String, userDetails> likedList) {
+    public void setLikedList(HashMap<String, userDetails> likedList) {
         this.likedList = likedList;
     }
 
@@ -98,7 +98,7 @@ public class userDetails {
         this.user_email = email;
     }
 
-    public userDetails(Object user_id, Object name, Object email, Object gender, Object age, Object city, Object neighborhood, Object roommate_number){
+    public userDetails(Object user_id, Object name, Object email, Object gender, Object age, Object city, Object neighborhood, Object roommate_number, Object likedList){
         this.user_id = (String)user_id;
         this.user_email = email;
         this.name = (String)name;
@@ -107,6 +107,7 @@ public class userDetails {
         this.city = (String)city;
         this.neighborhood = Arrays.asList(neighborhood.toString().split(","));
         this.roommate_number = roommate_number;
+        this.likedList = (HashMap<String, userDetails>) likedList;
     }
 
     @Exclude

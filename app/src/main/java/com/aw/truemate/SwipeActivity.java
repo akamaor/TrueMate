@@ -8,25 +8,13 @@ import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.*;
 
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SwipeActivity extends AppCompatActivity {
 
@@ -37,7 +25,6 @@ public class SwipeActivity extends AppCompatActivity {
     TextView roommateText;
     ImageButton likeButton ;
     ImageButton dislikeButton;
-//    LinkedHashMap<String, userDetails> allUsersList = new LinkedHashMap<>();
     Task<QuerySnapshot> usersFromFirebase;
     HashMap<String, userDetails> allUsers = new HashMap<>();
     Firebase fb = new Firebase();
@@ -59,20 +46,13 @@ public class SwipeActivity extends AppCompatActivity {
         likeButton = (ImageButton) findViewById(R.id.like);
         dislikeButton = (ImageButton) findViewById(R.id.dislike);
 
-        getAllUsersFromDB();
-//        startConvertDataFromDB();
-
-//        convertTaskToUserDetailsList();
-//        deleteCurrentUserFromList();
-//        final Iterator<userDetails> iterator = allUsers.values().iterator();
-//        updateActivityContent(iterator);
+        getAllUsersFromDBAndShowingUsers();
 
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addLikedItemToListAndUpdateActivityContent();
-//                updateActivityContent(iterator);
             }
         });
 
@@ -84,7 +64,7 @@ public class SwipeActivity extends AppCompatActivity {
         });
     }
 
-    private void startConvertDataFromDB() {
+    private void startConvertDataFromDBAndShowingUsers() {
         convertTaskToUserDetailsList();
         deleteCurrentUserFromList();
         initializeIterator();
@@ -127,40 +107,27 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     private void addLikedItemToListAndUpdateActivityContent() {
-//        final List<Object>[] userLikedList = new List[]{new LinkedList<>()};
-//        final List<Object> userLikedList = new LinkedList<>();
         final HashMap<Object, Object>[] userLikedList = new HashMap[]{new HashMap<>()};
         fb.readCollection("users", "liked_list", userId, new FirebaseCallback() {
             @Override
             public void onCallback(Object obj) {
-//                userLikedList.add(obj);
-
                 userLikedList[0] = (HashMap<Object, Object>) obj;
                 userDetails likedUser = allUsers.get(displayUserID);
                 userLikedList[0].put(likedUser.getUser_id(), likedUser);
-//                Map<String, Object> likedListMap = new HashMap<>();
-//                likedListMap.put("liked_list", userLikedList[0]);
-//                fb.updateFieldInDocument("users", userId, likedListMap);
-
                 fb.updateFieldInDocument("users", userId, "liked_list", userLikedList);
                 updateActivityContent(iterator);
             }
         });
     }
 
-    private void getAllUsersFromDB(){
-        final Task<QuerySnapshot> cr = fb.getAllDocumentFromCollection("users");
-//        while (!cr.isComplete()){
-//        }
-//        usersFromFirebase = cr;
-
-        cr.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    private void getAllUsersFromDBAndShowingUsers(){
+        final Task<QuerySnapshot> allDocuments = fb.getAllDocumentFromCollection("users");
+        allDocuments.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     usersFromFirebase = task;
-                    startConvertDataFromDB();
-
+                    startConvertDataFromDBAndShowingUsers();
                 } else {
                     Log.d("Error!", "Error getting documents: ", task.getException());
                 }
@@ -178,7 +145,8 @@ public class SwipeActivity extends AppCompatActivity {
                     document.get("age"),
                     document.get("city"),
                     document.get("neighborhood"),
-                    document.get("roommate_number"));
+                    document.get("roommate_number"),
+                    document.get("liked_list"));
 
             allUsers.put((String)document.get("user_id"), user);
         }

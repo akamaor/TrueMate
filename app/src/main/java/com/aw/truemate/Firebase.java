@@ -31,7 +31,6 @@ public class Firebase {
     }
 
 
-    //todo: this function is not working!!!!
     public void readCollection(String collectionName, final String field, String userId, final FirebaseCallback fbCallback){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +userId);
         final Task<DocumentSnapshot> source = document.get();

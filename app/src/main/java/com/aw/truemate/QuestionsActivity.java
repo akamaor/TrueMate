@@ -18,10 +18,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 
+import java.util.HashMap;
+
 public class QuestionsActivity<DB> extends AppCompatActivity {
     //layout
     EditText editName,editAge,editGender,editRoommate,editNeighborhood,editCity;
     Button buttonUpdate;
+    HashMap<String, userDetails> editLikedList;
 
     //Firebase database
     /*public DatabaseReference DB = FirebaseDatabase.getInstance().getReference();
@@ -45,6 +48,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
         editNeighborhood = (EditText) findViewById(R.id.editNeighborhood);
         editCity = (EditText) findViewById(R.id.editCity);
 
+
         FirebaseFirestore FB=FirebaseFirestore.getInstance();
         DocumentReference docRef = FB.collection("users").document(userID);
         Source source = Source.CACHE;
@@ -60,6 +64,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
                         editCity.setText(document.getString("city"));
                         editNeighborhood.setText(document.getString("neighborhood"));
                         editRoommate.setText(document.getString("roommate_number"));
+                        editLikedList = (HashMap<String, userDetails>) document.get("liked_list");
                     } else {//no doc
                     }
                 } else {//fail somehow
@@ -85,14 +90,15 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
                                                         editAge.getText().toString(),
                                                         editCity.getText().toString(),
                                                         editNeighborhood.getText().toString(),
-                                                        editRoommate.getText().toString());
+                                                        editRoommate.getText().toString(),
+                                                        editLikedList
+                                                        );
                                                 DB.updateCollection("users", userID, uDetails.toMap());
                                                 Toast.makeText(QuestionsActivity.this,"Update complete!",Toast.LENGTH_SHORT).show();
                                                 Intent intToMain = new Intent(QuestionsActivity.this, HomeActivity.class);
                                                 startActivity(intToMain);
                                             }
                                         }
-
         );
     }
 }
