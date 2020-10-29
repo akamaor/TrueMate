@@ -18,10 +18,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 
+import java.util.HashMap;
+
 public class QuestionsActivity<DB> extends AppCompatActivity {
     //layout
     EditText editName,editAge,editGender,editRoommate,editNeighborhood,editCity;
     Button buttonUpdate;
+    HashMap liked_list;
 
     //Firebase database
     /*public DatabaseReference DB = FirebaseDatabase.getInstance().getReference();

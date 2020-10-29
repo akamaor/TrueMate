@@ -30,9 +30,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -62,7 +65,11 @@ public class MyListActivity extends AppCompatActivity {
 
     public DatabaseReference mDatabase;
     public CollectionReference docRef = FB.collection("users");
+    public DocumentReference docRefLL = FB.document("users/"+userID);
+   // public Iterable<CollectionReference> collections =docRef.document(userID).get;
+
     public Object liked_list;
+    public Object liked_listL;
 /*
     //get user id-> liked ->
     String mTitle[]={};
@@ -85,6 +92,8 @@ public MyListAdapter adapter;
         lDescription.add("WhatsApp Description");
         lDescription.add("Twitter Description");
         lDescription.add("Instagram Description");
+        lLikedList.add("O4qen4mHZBhpY2g3XFV9ppn2BFg1");
+        lLikedList.add("p2wLyblyMUf9uXj4Sz3No6ROWzv1");
 
         listView = findViewById(R.id.listView);
 
@@ -125,22 +134,23 @@ public MyListAdapter adapter;
                     DocumentSnapshot document = task.getResult();
 
                     if (document != null) {
-                        liked_list= document.get("liked_list");
-                        Toast.makeText(MyListActivity.this,"finish mission",Toast.LENGTH_SHORT).show();
- /*                       for (int i=0;i<2;i++){
-                            docRef.document(userID).get(source).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        liked_list=document.get("liked_list");
+                        Toast.makeText(MyListActivity.this,"finish mission"+lLikedList.get(0),Toast.LENGTH_SHORT).show();
+                     for (int i=0;i<lLikedList.size();i++){
+                            docRef.document(lLikedList.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document2 = task.getResult();
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task2) {
+                                    if (task2.isSuccessful()) {
+                                        DocumentSnapshot document2 = task2.getResult();
                                         if (document2 != null) {
+                                        //Object DBmylistrow = document.geData();
                                             lTitle.add(document2.get("name").toString() + " " + document2.get("age").toString());
                                             lDescription.add(document2.get("city").toString() + " " + document2.get("neighborhood").toString());
                                         }
                                     }
                                 }
                             });
-                        }*/
+                        }
                         //update the adapter
                         adapter.notifyDataSetChanged();
                     } else {//no doc
