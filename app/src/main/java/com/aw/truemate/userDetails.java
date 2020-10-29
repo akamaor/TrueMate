@@ -1,23 +1,29 @@
 package com.aw.truemate;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @IgnoreExtraProperties
 public class userDetails {
     private String user_id;
     private String name;
+    private Object user_email;
     private String gender;
-    private String age;
+    private Object age;
     private String city;
-    private String neighborhood;
-    private String roommate_number;
-    private Map<String, Boolean> stars = new HashMap<>();
-    private LinkedHashMap<String, userDetails> likedList = new LinkedHashMap<>();
+    private List<String> neighborhood;
+    private Object roommate_number;
+    private List<String> likedList = new ArrayList<>();
+//    private HashMap<String, userDetails> likedList = new HashMap<>();
 
     public userDetails(){
         //default constructor
@@ -25,6 +31,10 @@ public class userDetails {
 
     public String getUser_id() {
         return user_id;
+    }
+
+    public Object getUser_email() {
+        return user_email;
     }
 
     public String getName() {
@@ -35,7 +45,7 @@ public class userDetails {
         return gender;
     }
 
-    public String getAge() {
+    public Object getAge() {
         return age;
     }
 
@@ -43,15 +53,15 @@ public class userDetails {
         return city;
     }
 
-    public String getNeighborhood() {
+    public List<String> getNeighborhood() {
         return neighborhood;
     }
 
-    public String getRoommate_number() {
+    public Object getRoommate_number() {
         return roommate_number;
     }
 
-    public LinkedHashMap<String, userDetails> getLikedList() {
+    public List<String> getLikedList() {
         return likedList;
     }
 
@@ -67,40 +77,48 @@ public class userDetails {
         this.gender = gender;
     }
 
+    public void setUser_email(String user_email) {
+        this.gender = user_email;
+    }
+
     public void setCity(String city) {
         this.city = city;
     }
 
-    public void setNeighborhood(String neighborhood) {
+    public void setNeighborhood(List<String> neighborhood) {
         this.neighborhood = neighborhood;
     }
 
-    public void setRoommate_number(String roommate_number) {
+    public void setRoommate_number(int roommate_number) {
         this.roommate_number = roommate_number;
     }
 
-    public void setLikedList(LinkedHashMap<String, userDetails> likedList) {
+    public void setLikedList(List<String> likedList) {
         this.likedList = likedList;
     }
 
-    public userDetails(String user_id){
+    public userDetails(String user_id, String email){
         this.user_id = user_id;
+        this.user_email = email;
     }
 
-    public userDetails(String user_id, String name, String gender, String age, String city, String neighborhood, String roommate_number){
-        this.user_id = user_id;
-        this.name = name;
-        this.gender = gender;
+    public userDetails(Object user_id, Object name, Object email, Object gender, Object age, Object city, Object neighborhood, Object roommate_number, Object likedList){
+        this.user_id = (String)user_id;
+        this.user_email = email;
+        this.name = (String)name;
+        this.gender = (String)gender;
         this.age = age;
-        this.city = city;
-        this.neighborhood = neighborhood;
+        this.city = (String)city;
+        this.neighborhood = Arrays.asList(neighborhood.toString().split(","));
         this.roommate_number = roommate_number;
+        this.likedList = (List<String>) likedList;
     }
 
     @Exclude
     public Map<String, Object> toMap(){
         Map<String, Object> userDetails = new HashMap<>();
-        userDetails.put("user_id", user_id); // user_id is an email
+        userDetails.put("user_id", user_id);
+        userDetails.put("email", user_email);
         userDetails.put("name", name);
         userDetails.put("gender", gender);
         userDetails.put("age", age);

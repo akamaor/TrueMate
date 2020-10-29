@@ -20,11 +20,16 @@ import com.google.firebase.firestore.Source;
 
 import java.util.HashMap;
 
+import java.util.List;
+
 public class QuestionsActivity<DB> extends AppCompatActivity {
     //layout
     EditText editName,editAge,editGender,editRoommate,editNeighborhood,editCity;
     Button buttonUpdate;
-    HashMap liked_list;
+   // HashMap liked_list;
+
+    List<String> editLikedList;
+
 
     //Firebase database
     /*public DatabaseReference DB = FirebaseDatabase.getInstance().getReference();
@@ -39,7 +44,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
         //create userID
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
         final String userID = mAuth.getCurrentUser().getUid();
-
+        final String email = mAuth.getCurrentUser().getEmail();
         //create variable for the layout
         editName = (EditText) findViewById(R.id.editName);
         editAge = (EditText) findViewById(R.id.editAge);
@@ -47,6 +52,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
         editRoommate = (EditText) findViewById(R.id.editRoommate);
         editNeighborhood = (EditText) findViewById(R.id.editNeighborhood);
         editCity = (EditText) findViewById(R.id.editCity);
+
 
         FirebaseFirestore FB=FirebaseFirestore.getInstance();
         DocumentReference docRef = FB.collection("users").document(userID);
@@ -63,6 +69,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
                         editCity.setText(document.getString("city"));
                         editNeighborhood.setText(document.getString("neighborhood"));
                         editRoommate.setText(document.getString("roommate_number"));
+                        editLikedList = (List<String>) document.get("liked_list");
                     } else {//no doc
                     }
                 } else {//fail somehow
@@ -79,18 +86,24 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                //the Firebase doesent work well
-                                                final userDetails uDetails = new userDetails(userID,editName.getText().toString(),editGender.getText().toString(),editAge.getText().toString(),editCity.getText().toString(),editNeighborhood.getText().toString(),editRoommate.getText().toString());
-                                                DB.updateCollection("users",userID,uDetails.toMap());
+                                                //the Firebase doesn't work well
+                                                final userDetails uDetails = new userDetails(
+                                                        userID,
+                                                        editName.getText().toString(),
+                                                        email,
+                                                        editGender.getText().toString(),
+                                                        editAge.getText().toString(),
+                                                        editCity.getText().toString(),
+                                                        editNeighborhood.getText().toString(),
+                                                        editRoommate.getText().toString(),
+                                                        editLikedList
+                                                        );
+                                                DB.updateCollection("users", userID, uDetails.toMap());
                                                 Toast.makeText(QuestionsActivity.this,"Update complete!",Toast.LENGTH_SHORT).show();
                                                 Intent intToMain = new Intent(QuestionsActivity.this, HomeActivity.class);
                                                 startActivity(intToMain);
                                             }
                                         }
-
         );
-
-
-
     }
 }

@@ -1,21 +1,17 @@
 package com.aw.truemate;
 
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.*;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
+import com.google.firebase.firestore.*;
 
-import com.google.firebase.firestore.Source;
-
-import java.util.Map;
+import java.util.*;
 import java.lang.*;
 
 public class Firebase {
 
-    private FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
     public void updateCollection(String collectionName, String documentKey, Map<String, Object> details) {
@@ -27,10 +23,29 @@ public class Firebase {
         return mAuth.getCurrentUser().getUid();
     }
 
-    public Object readCollection(String collectionName,String detail, String userId){
+
+    public void readCollection(String collectionName, final String field, String userId, final FirebaseCallback fbCallback){
         DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" +userId);
-        Task<DocumentSnapshot> source = document.get();
-        return source.getResult().get(detail);
+        final Task<DocumentSnapshot> source = document.get();
+        source.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    Object value = source.getResult().get(field);
+                    fbCallback.onCallback(value);
+                }
+            }
+        });
     }
 
+    public void updateFieldInDocument(String collectionName, String documentKey, String field, Object fieldValue){
+        DocumentReference document = FirebaseFirestore.getInstance().document(collectionName + "/" + documentKey);
+        document.update(field, fieldValue);
+    }
+
+
+    public Task<QuerySnapshot> getAllDocumentFromCollection(String collectionName){
+        Task<QuerySnapshot> collection = FirebaseFirestore.getInstance().collection(collectionName).get();
+        return collection;
+    }
 }
