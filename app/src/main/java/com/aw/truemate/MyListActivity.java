@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -62,7 +63,11 @@ public class MyListActivity extends AppCompatActivity {
 
     public DatabaseReference mDatabase;
     public CollectionReference docRef = FB.collection("users");
+    public DocumentReference docRefLL = FB.document("users/"+userID);
+   // public Iterable<CollectionReference> collections =docRef.document(userID).get;
+
     public Object liked_list;
+    public Object liked_listL;
 /*
     //get user id-> liked ->
     String mTitle[]={};
@@ -82,9 +87,11 @@ public MyListAdapter adapter;
 //        lTitle.add("Twitter");
 //        lTitle.add("Instagram");
         lDescription.add("Facebook Description");
+
 //        lDescription.add("WhatsApp Description");
 //        lDescription.add("Twitter Description");
 //        lDescription.add("Instagram Description");
+
 
         listView = findViewById(R.id.listView);
 
@@ -163,6 +170,34 @@ public MyListAdapter adapter;
 
     }
 
+/*            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+
+                    if (document != null) {
+                        liked_list=document.get("liked_list");
+                        Toast.makeText(MyListActivity.this,"finish mission"+lLikedList.get(0),Toast.LENGTH_SHORT).show();
+                     for (int i=0;i<lLikedList.size();i++){
+                            docRef.document(lLikedList.get(i)).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task2) {
+                                    if (task2.isSuccessful()) {
+                                        DocumentSnapshot document2 = task2.getResult();
+                                        if (document2 != null) {
+                                        //Object DBmylistrow = document.geData();
+                                            lTitle.add(document2.get("name").toString() + " " + document2.get("age").toString());
+                                            lDescription.add(document2.get("city").toString() + " " + document2.get("neighborhood").toString());
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        //update the adapter
+                        adapter.notifyDataSetChanged();
+                    } else {//no doc
+                    }
+                } else {//fail somehow
+*/
     private void getDataFromDB(){
         final Task<QuerySnapshot> allDocuments = fb.getAllDocumentFromCollection("users");
         allDocuments.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

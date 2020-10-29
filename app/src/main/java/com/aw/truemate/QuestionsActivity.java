@@ -19,13 +19,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Source;
 
 import java.util.HashMap;
+
 import java.util.List;
 
 public class QuestionsActivity<DB> extends AppCompatActivity {
     //layout
     EditText editName,editAge,editGender,editRoommate,editNeighborhood,editCity;
     Button buttonUpdate;
+   // HashMap liked_list;
+
     List<String> editLikedList;
+
 
     //Firebase database
     /*public DatabaseReference DB = FirebaseDatabase.getInstance().getReference();
