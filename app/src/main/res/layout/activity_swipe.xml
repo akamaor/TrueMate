@@ -23,8 +23,8 @@
 
     <ImageView
         android:id="@+id/userImage"
-        android:layout_width="274dp"
-        android:layout_height="232dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         tools:layout_editor_absoluteX="35dp"
         tools:layout_editor_absoluteY="90dp"
         tools:srcCompat="@tools:sample/avatars"
@@ -32,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userName"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        app:srcCompat="@drawable/noa"/>
 
     <ImageButton
         android:id="@+id/dislike"
