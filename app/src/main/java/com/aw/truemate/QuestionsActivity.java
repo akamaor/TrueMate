@@ -20,6 +20,7 @@ import com.google.firebase.firestore.Source;
 
 import java.util.HashMap;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class QuestionsActivity<DB> extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class QuestionsActivity<DB> extends AppCompatActivity {
     Button buttonUpdate;
    // HashMap liked_list;
 
-    List<String> editLikedList;
+    List<String> editLikedList = new LinkedList<>();
 
 
     //Firebase database
