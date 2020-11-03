@@ -1,16 +1,9 @@
 package com.aw.truemate;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @IgnoreExtraProperties
 public class userDetails {
@@ -22,8 +15,7 @@ public class userDetails {
     private String city;
     private List<String> neighborhood;
     private Object roommate_number;
-    private List<String> likedList = new ArrayList<>();
-//    private HashMap<String, userDetails> likedList = new HashMap<>();
+    private List<String> liked_list = new ArrayList<>();
 
     public userDetails(){
         //default constructor
@@ -62,7 +54,7 @@ public class userDetails {
     }
 
     public List<String> getLikedList() {
-        return likedList;
+        return liked_list;
     }
 
     public void setUser_id(String user_id) {
@@ -94,7 +86,7 @@ public class userDetails {
     }
 
     public void setLikedList(List<String> likedList) {
-        this.likedList = likedList;
+        this.liked_list = likedList;
     }
 
     public userDetails(String user_id, String email){
@@ -111,7 +103,7 @@ public class userDetails {
         this.city = (String)city;
         this.neighborhood = Arrays.asList(neighborhood.toString().split(","));
         this.roommate_number = roommate_number;
-        this.likedList = (List<String>) likedList;
+        this.liked_list = (List<String>) likedList;
     }
 
     @Exclude
@@ -125,7 +117,7 @@ public class userDetails {
         userDetails.put("city", city);
         userDetails.put("neighborhood", neighborhood);
         userDetails.put("roommate_number", roommate_number);
-        userDetails.put("liked_list", likedList);
+        userDetails.put("liked_list", liked_list);
 
         return userDetails;
     }
