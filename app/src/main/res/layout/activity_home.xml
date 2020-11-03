@@ -47,7 +47,7 @@
         android:id="@+id/title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="סטטיסטיקה"
+        android:text="נועה דואק והחתולה קושקה"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
@@ -55,7 +55,7 @@
         android:id="@+id/stat1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="אני וקושקה מחפשות 2 שותפים לכניסה בדירה בד', פרטים בלינק (:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title2" />
@@ -64,7 +64,7 @@
         android:id="@+id/stat2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="טבעונית אך לא מהדרת, אוהבת אווירה ביתית ונעימה"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stat1" />
@@ -73,7 +73,7 @@
         android:id="@+id/stat3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="נקיון לא כל כך חשוב אך אהבה לחתולים כן!"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stat2" />
