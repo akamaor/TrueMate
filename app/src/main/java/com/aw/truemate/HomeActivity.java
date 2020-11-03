@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, MainActivity.class);
+                Intent i = new Intent(HomeActivity.this, QuestionsActivity.class);
                 startActivity(i);
             }
         });
