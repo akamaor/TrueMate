@@ -83,11 +83,11 @@ public MyListAdapter adapter;
         setContentView(R.layout.activity_mylist);
 
         //adding example date for the test
-        lTitle.add("Facebook");
+//        lTitle.add("Facebook");
 //        lTitle.add("WhatsApp");
 //        lTitle.add("Twitter");
 //        lTitle.add("Instagram");
-        lDescription.add("Facebook Description");
+//        lDescription.add("Facebook Description");
 
 //        lDescription.add("WhatsApp Description");
 //        lDescription.add("Twitter Description");
